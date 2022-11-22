@@ -11,8 +11,11 @@ import {
   BrowserRouter as Router,
   Link
 } from "react-router-dom";
+import useUserTockenStorage from '../../storages/UserTockenStorage'
 
 export function HeaderComponent() {
+  const [userTocken, setUserTocken] = useUserTockenStorage('');
+
     return (
         <div className="AppHeader">
           <Flex minWidth='max-content' alignItems='center' gap='2' h='60px'>
@@ -34,8 +37,9 @@ export function HeaderComponent() {
             </Box>
             <Spacer />
             <Box>
-              <HeaderUserUnloggedComponent />
-              {/* <HeaderUserLoggedComponent /> */}
+              { userTocken == '' ? <HeaderUserUnloggedComponent /> : <HeaderUserLoggedComponent /> }
+              {/* <HeaderUserUnloggedComponent />
+              <HeaderUserLoggedComponent /> */}
             </Box>
           </Flex>
         </div>

@@ -15,7 +15,8 @@ import {
 } from '@chakra-ui/react'
 import { MdAlternateEmail, MdCheckCircleOutline, MdPersonOutline } from "react-icons/md";
 import { Checkbox, CheckboxGroup } from '@chakra-ui/react'
-
+import React, { useState, useEffect } from 'react';
+import useUserTockenStorage from '../../../storages/UserTockenStorage'
 
 // Define mutation
 const LOGIN_MUTATION = gql`
@@ -25,33 +26,83 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-
 export default function LoginFormComponent(){
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const [isUserTocken, setUserTocken] = useUserTockenStorage('');
+
+    const userLogin = async (username, password) => {
+        await fetch('https://dev.neko3.space/api/Account/SignIn', {
+            method: "POST", // default, so we can ignore
+            body: JSON.stringify({
+                username: username,
+                password: password,
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+        .then(response => response.json())
+        .then((data) => {
+            console.log(data)
+            //localStorage.setItem("UserJwtToket", JSON.stringify(data.token));
+            setUserTocken(JSON.stringify(data.token))
+        })
+        .catch((err) => {
+                console.log(err.message);
+        });
+     };
+
+     const handleSubmit = (e) => {
+        e.preventDefault();
+        userLogin(username, password);
+     }; 
+
+     const [show, setShow] = React.useState(false)
+     const handleClick = () => setShow(!show)   
+
     return(
         <Stack spacing={4}>
             <Heading>Login page</Heading>
             <InputGroup>
                 <InputLeftElement
-                pointerEvents='none'
-                children={<MdPersonOutline />}
+                    pointerEvents='none'
+                    children={<MdPersonOutline />}
                 />
-                <Input type='text' placeholder='Nickname' />
+                <Input
+                    type='text'
+                    placeholder='Nickname'
+                    //value={username}
+                    onChange={evt => setUsername(evt.target.value) }
+                    />
             </InputGroup>
 
-            <InputGroup>
+            <InputGroup size='md'>
                 <InputLeftElement
-                pointerEvents='none'
-                color='gray.300'
-                fontSize='1.2em'
-                children='$'
+                    pointerEvents='none'
+                    color='gray.300'
+                    fontSize='1.2em'
+                    children='$'
+                    />
+                <Input
+                    pr='4.5rem'
+                    type={show ? 'text' : 'password'}
+                    placeholder='Enter password'
+                    ///value={password}
+                    onChange={evt => setPassword(evt.target.value) }
                 />
-                <Input type='password' placeholder='Password' />
-                <InputRightElement children={<MdCheckCircleOutline color='green.500' />} />
+                <InputRightElement width='4.5rem'>
+                    <Button h='1.75rem' size='sm' onClick={handleClick}>
+                        {show ? 'Hide' : 'Show'}
+                    </Button>
+                </InputRightElement>
             </InputGroup>
+
             <Link>Forgot password</Link>
 
             <Checkbox defaultChecked>Remember me</Checkbox>
-            <Button>Login</Button>
+            <Button onClick={ handleSubmit }>Login</Button>
 
             <Text>Are you still not with us? <LinkRouter to="/signUp"><Link>Sign up!</Link></LinkRouter></Text>
         </Stack>
