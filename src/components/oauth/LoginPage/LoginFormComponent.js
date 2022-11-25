@@ -3,6 +3,7 @@ import { Avatar, AvatarBadge, AvatarGroup, Spacer, Button } from '@chakra-ui/rea
 import {
     BrowserRouter as Router,
     Route,
+    useNavigate,
     Link as LinkRouter
   } from "react-router-dom";
 
@@ -16,7 +17,8 @@ import {
 import { MdAlternateEmail, MdCheckCircleOutline, MdPersonOutline } from "react-icons/md";
 import { Checkbox, CheckboxGroup } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react';
-import useUserTockenStorage from '../../../storages/UserTockenStorage'
+import { useSelector, useDispatch } from 'react-redux'
+import { updateToken, destroyToken } from '../../../features/oauth/tokenSlice'
 
 // Define mutation
 const LOGIN_MUTATION = gql`
@@ -27,10 +29,12 @@ const LOGIN_MUTATION = gql`
 `;
 
 export default function LoginFormComponent(){
+    const navigate = useNavigate();
+
+    const dispatch = useDispatch();
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
-    const [isUserTocken, setUserTocken] = useUserTockenStorage('');
 
     const userLogin = async (username, password) => {
         await fetch('https://dev.neko3.space/api/Account/SignIn', {
@@ -46,8 +50,8 @@ export default function LoginFormComponent(){
         .then(response => response.json())
         .then((data) => {
             console.log(data)
-            //localStorage.setItem("UserJwtToket", JSON.stringify(data.token));
-            setUserTocken(JSON.stringify(data.token))
+            dispatch(updateToken(JSON.stringify(data.token) || null))
+            navigate("/me")
         })
         .catch((err) => {
                 console.log(err.message);
