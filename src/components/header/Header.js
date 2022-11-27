@@ -7,10 +7,12 @@ import HeaderUserLoggedComponent from './HeaderUserLoggedComponent'
 import HeaderUserUnloggedComponent from './HeaderUserUnloggedComponent'
 import { useSelector, useDispatch } from 'react-redux'
 import { updateToken, destroyToken, isTokenExist } from '../../features/oauth/tokenSlice'
+import { isUserLogged, selectUser } from '../../features/oauth/userSlice'
 
 
 export function HeaderComponent() {
-  const isNekoLogged =  useSelector(isTokenExist)
+  // const isNekoLogged =  useSelector(isTokenExist)
+  const isNekoLogged = useSelector(isUserLogged)
 
     return (
         <div className="AppHeader">

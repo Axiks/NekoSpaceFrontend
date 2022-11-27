@@ -8,11 +8,13 @@ import {
   } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { updateToken, destroyToken } from '../../features/oauth/tokenSlice'
+import { isUserLogged, selectUser, updateUser } from '../../features/oauth/userSlice'
 
 export default function UserLogOutPageComponent(){
   const dispatch = useDispatch();
   const navigate = useNavigate();
     dispatch(destroyToken())
+    dispatch(updateUser())
     console.log('userLogOutPress')
     //const storageKey = "UserJwtToket"
     //localStorage.clear(storageKey)

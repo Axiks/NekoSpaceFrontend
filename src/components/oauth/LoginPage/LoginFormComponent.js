@@ -19,6 +19,7 @@ import { Checkbox, CheckboxGroup } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { updateToken, destroyToken } from '../../../features/oauth/tokenSlice'
+import { isUserLogged, selectUser, updateUser } from '../../../features/oauth/userSlice'
 
 // Define mutation
 const LOGIN_MUTATION = gql`
@@ -51,6 +52,7 @@ export default function LoginFormComponent(){
         .then((data) => {
             console.log(data)
             dispatch(updateToken(JSON.stringify(data.token) || null))
+            dispatch(updateUser())
             navigate("/me")
         })
         .catch((err) => {

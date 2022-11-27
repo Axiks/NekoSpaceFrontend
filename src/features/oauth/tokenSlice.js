@@ -2,10 +2,12 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const storageKey = "UserJwtToket"
 
+console.log(JSON.parse(localStorage.getItem(storageKey)))
+
 export const tokenSlice = createSlice({
     name: 'token',
     initialState: {
-      token: JSON.parse(localStorage.getItem(storageKey)),
+      value: JSON.parse(localStorage.getItem(storageKey)),
     },
     reducers: {
       // updateToken, deleteToken
@@ -23,6 +25,7 @@ export const tokenSlice = createSlice({
         state.value += action.payload
       },
       updateToken: (state, action) => {
+        localStorage.setItem(storageKey, action.payload)
         return {
           ...state,
           value: action.payload
