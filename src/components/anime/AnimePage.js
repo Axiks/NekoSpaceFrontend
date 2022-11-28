@@ -9,6 +9,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { isUserLogged, selectUser } from '../../features/oauth/userSlice'
 import { RatingComponent } from './rating/RatingConponent'
 import { LinksAnotherServiceComponent } from './linksAnotherService/linksAnotherService'
+import {
+    BrowserRouter as Router,
+    Link  as LinkRouter
+  } from "react-router-dom";
 
 
 const GET_ANIME_BY_ID = gql`
@@ -113,8 +117,8 @@ export function AnimePageComponent() {
 
     var animeLinks = anime.anotherService
     if(animeLinks.kitsuId != null) links.push({ label: 'Kitsu', link: 'https://kitsu.io/anime/' + animeLinks.kitsuId });
-    if(animeLinks.myAnimeList != null) links.push({ label: 'My Anime List', link: 'https://myanimelist.net/anime/' + animeLinks.kitsuId });
-    if(animeLinks.notifyId != null) links.push({ label: 'Notify', link: 'https://notify.moe/anime/' + animeLinks.myAnimeList });
+    if(animeLinks.myAnimeList != null) links.push({ label: 'My Anime List', link: 'https://myanimelist.net/anime/' + animeLinks.myAnimeList });
+    if(animeLinks.notifyId != null) links.push({ label: 'Notify', link: 'https://notify.moe/anime/' + animeLinks.notifyId });
     if(animeLinks.animePlanetId != null) links.push({ label: 'Anime Planet', link: 'https://www.anime-planet.com/anime/' + animeLinks.animePlanetId });
     if(animeLinks.aniSearchId != null) links.push({ label: 'AniSearch', link: 'https://www.anisearch.com/anime/' + animeLinks.aniSearchId });
     if(animeLinks.livechartMeId != null) links.push({ label: 'LivechartMe', link: 'https://www.livechart.me/anime/' + animeLinks.livechartMeId });
@@ -178,6 +182,9 @@ export function AnimePageComponent() {
                 { isNekoLogged ? <ViewStatusComponent animeId= {anime.id} viewStatus= { nekoViewStatus != null ? nekoViewStatus.status : null } /> : null }
                 { isNekoLogged ? <RatingComponent animeId= {anime.id} userRating = { nekoRating != null ? nekoRating.ratingValue : null } /> : null }
                 <LinksAnotherServiceComponent linksToAnotherService= { links } />
+                <LinkRouter to= { '/provideSuggestion/' + anime_id }>
+                    <Button colorScheme='teal'>Provide Suggestion</Button>
+                </LinkRouter>
             </GridItem>
             <GridItem colSpan={9} bg='papayawhip' >
             </GridItem>
