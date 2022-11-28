@@ -1,7 +1,35 @@
 import { createSlice } from '@reduxjs/toolkit'
 import jwt_decode from "jwt-decode";
+import { useQuery, gql, useMutation } from '@apollo/client';
+
 
 const storageKey = "UserJwtToket"
+
+const GET_USER_DATA_FROM_API = gql`
+{
+  me{
+		id,
+		userName,
+		email,
+		about,
+		favoriteAnimes{
+			anime{
+				id
+			}
+		},
+		ratingAnimes{
+			anime{
+				id
+			}
+		},
+		animeViewingStatuses{
+			anime{
+				id
+			}
+		}
+	}
+}
+`;
 
 export const userSlice = createSlice({
     name: 'user',
@@ -25,14 +53,14 @@ function getUserData(){
     if(isTokenExist){
         var decoded = jwt_decode(token);
 
-        var iserDataFromTocken = {
+        var userDataFromTocken = {
             userid: decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'],
             username: decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
             email: decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'],
             role: decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'],
-            exp: decoded['exp']
+            exp: decoded['exp'],
         }
-        return iserDataFromTocken
+        return userDataFromTocken
     }
     return null
 }

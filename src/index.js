@@ -8,7 +8,8 @@ import { setContext } from '@apollo/client/link/context';
 import { ChakraProvider } from '@chakra-ui/react'
 
 const httpLink = createHttpLink({
-  uri: 'https://dev.neko3.space/graphql/'
+  //uri: 'https://dev.neko3.space/graphql/'
+  uri: 'https://192.168.1.133:2083/graphql/'
 });
 
 const storageKey = "UserJwtToket"

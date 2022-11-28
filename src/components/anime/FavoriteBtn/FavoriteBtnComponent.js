@@ -30,7 +30,7 @@ export function FavoriteButtonComponent(props){
 
     return(
         <div>
-            <Button isLoading={ loading } leftIcon={isAnimeFavorite ? <MdFavoriteBorder /> : <MdFavorite />} onClick={ clickBtn }>
+            <Button isLoading={ loading } leftIcon={isAnimeFavorite ? <MdFavorite /> : <MdFavoriteBorder />} onClick={ clickBtn }>
                 { isAnimeFavorite ? 'Not Favorite' : 'Make Favorite' }
             </Button>
         </div>

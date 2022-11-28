@@ -4,8 +4,11 @@ import { Image } from '@chakra-ui/react'
 import { Heading, Text, Link } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
 import { FavoriteButtonComponent } from './FavoriteBtn/FavoriteBtnComponent'
+import { ViewStatusComponent } from './viewStatus/ViewStatusComponent'
 import { useSelector, useDispatch } from 'react-redux'
 import { isUserLogged, selectUser } from '../../features/oauth/userSlice'
+import { RatingComponent } from './rating/RatingConponent'
+
 
 const GET_ANIME_BY_ID = gql`
 query Anime($anime_id: UUID!){
@@ -51,44 +54,18 @@ query Anime($anime_id: UUID!){
             favoriteInUsers{
                 userId
             },
+            viewingStatusInUsers{
+                userId,
+                status
+            },
+            ratingInUsers{
+                userId,
+                ratingValue
+            }
         }
     }
   }
 `;
-
-const UPDATE_ANIME_VIEW_STATUS = gql`
-mutation updateUserLibraryEntry($anime_id: UUID!, $view_status: UserViewStatus){
-    updateUserLibraryEntry(input: {
-        animeId: $anime_id,
-        viewStatus: $view_status,
-    }) {
-        error
-    }
-  }
-`;
-
-function UpdateAnimeViewStatus(props){   
-    const [mutateFunction, { data, loading, error }] = useMutation(UPDATE_ANIME_VIEW_STATUS);
-    if (loading) return <Image src="https://media.tenor.com/Gv1cMkqev0wAAAAM/anime-confused.gif"></Image>;
-    if (error) return `Submission error! ${error.message}`;
-
-    function clickBtn(){
-        console.log('button cick')
-        var x = mutateFunction({variables: {anime_id: props.animeId, view_status:props.viewStatus}})
-        console.log('Update view status response: ')
-        console.log(x)
-    }
-
-    // onClick={mutateFunction({variables: {anime_id: props.animeId, view_status:props.viewStatus}})}
-    return(
-        <div>
-            <Button onClick={ clickBtn }>
-                SetViewStatus
-            </Button>
-        </div>
-    )
-    //return { data, loading, error }
-}
 
 
 export function AnimePageComponent() {
@@ -113,6 +90,17 @@ export function AnimePageComponent() {
     console.log('is Favorite')
     console.log(isNekoFavorite)
 
+    // Чи відмічали статус даного татйлу?
+    var nekoViewStatus = anime.viewingStatusInUsers.find(e => e.userId === userId) ?? null
+    console.log('View status')
+    console.log(nekoViewStatus)
+
+    // Оцінка тайтлу
+    var nekoRating= anime.ratingInUsers.find(e => e.userId === userId) ?? null
+    console.log('Neko rating')
+    console.log(nekoRating)
+
+    // Статус трансляції
     var hasIredData = anime.aired != null;
 
    // const selectNekoData = useSelector(selectUser)
@@ -164,9 +152,11 @@ export function AnimePageComponent() {
                 <Text>Episodes count: { anime.numEpisodes }</Text>
 
             </GridItem>
-            <GridItem colSpan={3} bg='tomato'>
+            <GridItem colSpan={3}>
                 {/* <UpdateAnimeViewStatus animeId= {anime.id} viewStatus= 'PLAN_TO_WATCH'/> */}
                 <FavoriteButtonComponent animeId= {anime.id} isFavoriteStatus= { isNekoFavorite } />
+                <ViewStatusComponent animeId= {anime.id} viewStatus= { nekoViewStatus != null ? nekoViewStatus.status : null } />
+                <RatingComponent animeId= {anime.id} userRating = { nekoRating != null ? nekoRating.ratingValue : null } />
             </GridItem>
             <GridItem colSpan={9} bg='papayawhip' >
                 <Link href={ "https://myanimelist.net/anime/" + anime.anotherService.myAnimeList }>MyAnimeList</Link>
