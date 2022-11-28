@@ -8,6 +8,7 @@ import { ViewStatusComponent } from './viewStatus/ViewStatusComponent'
 import { useSelector, useDispatch } from 'react-redux'
 import { isUserLogged, selectUser } from '../../features/oauth/userSlice'
 import { RatingComponent } from './rating/RatingConponent'
+import { LinksAnotherServiceComponent } from './linksAnotherService/linksAnotherService'
 
 
 const GET_ANIME_BY_ID = gql`
@@ -30,9 +31,6 @@ query Anime($anime_id: UUID!){
                 poster {
                     original
                 }
-            },
-            anotherService {
-                myAnimeList
             },
             numEpisodes,
             source,
@@ -61,6 +59,16 @@ query Anime($anime_id: UUID!){
             ratingInUsers{
                 userId,
                 ratingValue
+            },
+            anotherService{
+                kitsuId,
+                myAnimeList,
+                notifyId,
+                animePlanetId,
+                aniSearchId,
+                livechartMeId,
+                animeDBId,
+                anilistId
             }
         }
     }
@@ -79,7 +87,7 @@ export function AnimePageComponent() {
     if (loading) return <Image src="https://media.tenor.com/Gv1cMkqev0wAAAAM/anime-confused.gif"></Image>;
     if (error) return `Error! ${error}`;
 
-    var userId = selectNekoData.userid
+    var userId = selectNekoData != null ? selectNekoData.userid : null
     console.log(userId)
 
     var anime = data.anime.nodes[0];
@@ -99,6 +107,19 @@ export function AnimePageComponent() {
     var nekoRating= anime.ratingInUsers.find(e => e.userId === userId) ?? null
     console.log('Neko rating')
     console.log(nekoRating)
+
+    // Links to another service
+    var links = []
+
+    var animeLinks = anime.anotherService
+    if(animeLinks.kitsuId != null) links.push({ label: 'Kitsu', link: 'https://kitsu.io/anime/' + animeLinks.kitsuId });
+    if(animeLinks.myAnimeList != null) links.push({ label: 'My Anime List', link: 'https://myanimelist.net/anime/' + animeLinks.kitsuId });
+    if(animeLinks.notifyId != null) links.push({ label: 'Notify', link: 'https://notify.moe/anime/' + animeLinks.myAnimeList });
+    if(animeLinks.animePlanetId != null) links.push({ label: 'Anime Planet', link: 'https://www.anime-planet.com/anime/' + animeLinks.animePlanetId });
+    if(animeLinks.aniSearchId != null) links.push({ label: 'AniSearch', link: 'https://www.anisearch.com/anime/' + animeLinks.aniSearchId });
+    if(animeLinks.livechartMeId != null) links.push({ label: 'LivechartMe', link: 'https://www.livechart.me/anime/' + animeLinks.livechartMeId });
+    if(animeLinks.animeDBId != null) links.push({ label: 'AnimeDB', link: 'https://anidb.net/anime/' + animeLinks.animeDBId });
+    if(animeLinks.anilistId != null) links.push({ label: 'Anilist', link: 'https://anilist.co/anime/' + animeLinks.anilistId });
 
     // Статус трансляції
     var hasIredData = anime.aired != null;
@@ -153,13 +174,12 @@ export function AnimePageComponent() {
 
             </GridItem>
             <GridItem colSpan={3}>
-                {/* <UpdateAnimeViewStatus animeId= {anime.id} viewStatus= 'PLAN_TO_WATCH'/> */}
-                <FavoriteButtonComponent animeId= {anime.id} isFavoriteStatus= { isNekoFavorite } />
-                <ViewStatusComponent animeId= {anime.id} viewStatus= { nekoViewStatus != null ? nekoViewStatus.status : null } />
-                <RatingComponent animeId= {anime.id} userRating = { nekoRating != null ? nekoRating.ratingValue : null } />
+                { isNekoLogged ? <FavoriteButtonComponent animeId= {anime.id} isFavoriteStatus= { isNekoFavorite } /> : null }
+                { isNekoLogged ? <ViewStatusComponent animeId= {anime.id} viewStatus= { nekoViewStatus != null ? nekoViewStatus.status : null } /> : null }
+                { isNekoLogged ? <RatingComponent animeId= {anime.id} userRating = { nekoRating != null ? nekoRating.ratingValue : null } /> : null }
+                <LinksAnotherServiceComponent linksToAnotherService= { links } />
             </GridItem>
             <GridItem colSpan={9} bg='papayawhip' >
-                <Link href={ "https://myanimelist.net/anime/" + anime.anotherService.myAnimeList }>MyAnimeList</Link>
             </GridItem>
         </Grid>
     );

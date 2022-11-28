@@ -22,7 +22,7 @@ export function RatingComponent(props){
     function setAnimeRatingChange(newRating){
         console.log(newRating);
         setanimeRating(newRating)
-        //mutateFunction({variables: {anime_id: props.animeId, rating_value: newRating }})
+        mutateFunction({variables: {anime_id: props.animeId, rating_value: newRating }})
     }
 
     return (
