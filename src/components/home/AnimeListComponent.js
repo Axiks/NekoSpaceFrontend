@@ -31,6 +31,15 @@ import {
 import { useQuery, gql } from '@apollo/client';
 import { AspectRatio } from '@chakra-ui/react'
 
+function setSelectMainName(titles){
+  console.log( 'Titles arr' )
+   console.log(titles)
+  var animeName = titles.find(x => x.isMain === true);
+  console.log( 'MainName' )
+  console.log(animeName)
+  return animeName
+}
+
 export function AnimeListComponent(props){
     return (
         <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(264px, 1fr))'>
@@ -51,7 +60,7 @@ export function AnimeListComponent(props){
                         <Heading size='md'>
                           <LinkRouter to= { '/anime/' + anime.id }>
                              <LinkOverlay>
-                                {anime.titles[0].body}
+                                {setSelectMainName(anime.titles).body}
                             </LinkOverlay>
                           </LinkRouter>
                         </Heading>

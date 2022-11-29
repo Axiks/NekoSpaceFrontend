@@ -8,7 +8,8 @@ export const GET_ANIMES_LIST = gql`
             id,
             titles{
             body,
-            language
+            language,
+            isMain
             },
             synopsises{
             body,
