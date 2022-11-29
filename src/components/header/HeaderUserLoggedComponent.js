@@ -41,8 +41,8 @@ function HeaderUserLoggedComponent(){
           </MenuGroup>
           <MenuDivider />
           <MenuGroup title='Help'>
+            <LinkRouter to='admin'><MenuItem>Admin page</MenuItem></LinkRouter>
             <MenuItem>Docs</MenuItem>
-            <MenuItem>FAQ</MenuItem>
           </MenuGroup>
         </MenuList>
       </Menu>

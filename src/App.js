@@ -10,15 +10,16 @@ import {NotFoundPageComponent} from './components/NotFound/NotFoundPage';
 
 import { HomePageComponent } from './components/home/HomePage';
 import { Container, VStack } from '@chakra-ui/react'
+import { Provider } from 'react-redux'
+import store from './app/store'
+
 import LoginPageComponent from './components/oauth/LoginPage/LoginPage';
 import SignUpPageComponent from './components/oauth/SignUp/SignUpPage';
 import UserPageComponent from './components/user/UserPageComponent';
 import UserLogOutPageComponent from './components/oauth/LogOut';
 import ProvideAnimeSuggestionPage from './components/provideSuggestion/ProvideAnimeSuggestionPage';
-
-import { Provider } from 'react-redux'
-import store from './app/store'
 import UserSettingPage from './components/user/userSetting/UserSettingPage';
+import AdminPage from './components/admin/AdminPage';
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
                 <Route exact path="/login" element={<LoginPageComponent />}/>
                 <Route exact path="/signUp" element={<SignUpPageComponent />}/>
                 <Route exact path="/logOut" element={ <UserLogOutPageComponent /> }/>
+                <Route exact path="/admin" element={ <AdminPage /> }/>
                 <Route path="*" element={<NotFoundPageComponent/>}/>
               </Routes>
             </Container>
