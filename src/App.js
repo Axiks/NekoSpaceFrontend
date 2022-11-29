@@ -18,6 +18,7 @@ import ProvideAnimeSuggestionPage from './components/provideSuggestion/ProvideAn
 
 import { Provider } from 'react-redux'
 import store from './app/store'
+import UserSettingPage from './components/user/userSetting/UserSettingPage';
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
                 <Route exact path="/" element={<HomePageComponent />}/>
                 <Route exact path="/anime/:anime_id" element={<AnimePageComponent />}/>
                 <Route exact path="/me" element={<UserPageComponent />}/>
+                <Route exact path="/me/setting" element={<UserSettingPage />}/>
                 <Route exact path="/provideSuggestion/:anime_id" element={<ProvideAnimeSuggestionPage />}/>
                 <Route exact path="/login" element={<LoginPageComponent />}/>
                 <Route exact path="/signUp" element={<SignUpPageComponent />}/>
