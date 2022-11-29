@@ -172,7 +172,7 @@ export function AnimePageComponent() {
                 <Text>Country: Japan</Text>
                 { hasIredData ? (<Text>Aired: { anime.aired.from } - {anime.aired.to } </Text>) : (<Text>Aired: none</Text>) }
                 <Text>Status: calculate</Text>
-                <Text>Premiered: { anime.premier.sezon } { anime.premier.year }</Text>
+                { anime.premier != null ? <Text>Premiered: { anime.premier.sezon } { anime.premier.year }</Text> : '' }  
                 <Text>Duration: { anime.episodesDurationSeconds ? (anime.episodesDurationSeconds) : ( <i>none</i> ) }</Text>
                 <Text>Episodes count: { anime.numEpisodes }</Text>
 

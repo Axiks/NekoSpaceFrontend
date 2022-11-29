@@ -6,6 +6,17 @@ import { useParams } from 'react-router-dom'
 import { Flex, Spacer } from '@chakra-ui/react'
 import LinksAnotherServiceComponent from '../anime/linksAnotherService/linksAnotherService';
 import SuggestionPostersComponent from './suggestionPosters/SuggestionPostersComponent';
+import {
+    List,
+    ListItem,
+    ListIcon,
+    OrderedList,
+    UnorderedList,
+  } from '@chakra-ui/react'
+import { FiCircle, FiCheckCircle} from "react-icons/fi";
+import { RiHome2Line, RiHome2Fill} from "react-icons/ri";
+import AddTitleSuggestionFormComponent from './suggestionTitle/AddTitleSuggestionFormComponent';
+import AddTitleSuggestionComponent from './suggestionTitle/AddTitleSuggestionComponent';
 
 // const PROVIDE_TRANSLATION_SUGGESTION = gql`
 // muttation CreateTranslationProposal($anime_id: UUID!, $proposition: String!, $language: Languages!){
@@ -29,8 +40,13 @@ const GET_ANIME_BY_ID = gql`
                 id,
                 numEpisodes,
                 titles{
+                    id,
                     body,
-                    language
+                    language,
+                    isAcceptProposal,
+                    isMain,
+                    isOriginal,
+                    creatorUserId
                 },
                 synopsises{
                     body,
@@ -106,7 +122,43 @@ export default function ProvideAnimeSuggestionPage(){
             <Text>Duration: { anime.episodesDurationSeconds ? (anime.episodesDurationSeconds) : ( <i>none</i> ) }</Text>
             <LinksAnotherServiceComponent linksToAnotherService= { links } />
 
+            <Heading  as='h2' size='md'>Poster</Heading>
+            <Heading  as='h3' size='sm'>Add your version of the poster</Heading>
             <SuggestionPostersComponent animePosters= {anime.posters} />
+            <Button colorScheme='teal' variant='outline'>
+                Upload image
+            </Button>
+
+            <Heading  as='h2' size='md'>Title</Heading>
+            <Heading  as='h3' size='sm'>Add your version of the title</Heading>
+            <AddTitleSuggestionComponent animeId= {anime.id} titles= {anime.titles} />
+            {/* <List spacing={3}>
+                {anime.titles.map(title=> (
+                    <ListItem>
+                        <Text>{ title.language }</Text>
+                        <ListIcon as={ title.isMain == true ? FiCheckCircle : FiCircle } color='green.500' />
+                        <ListIcon as={ title.isOriginal == true ? RiHome2Fill : RiHome2Line } color='orange.500' />
+                        { title.body }
+                    </ListItem>
+                ))}
+            </List>
+            <AddTitleSuggestionFormComponent animeId={anime.id} /> */}
+
+            <Heading  as='h2' size='md'>Description</Heading>
+            <Heading  as='h3' size='sm'>Add your version of the Description</Heading>
+            { anime.synopsises.length != 0 ?
+                <List spacing={3}>
+                    {anime.synopsises.map(synopsises=> (
+                        <ListItem>
+                            <Text>{ synopsises.language }</Text>
+                            <ListIcon as={ synopsises.isMain == true ? FiCheckCircle : FiCircle } color='green.500' />
+                            <ListIcon as={ synopsises.isOriginal == true ? RiHome2Fill : RiHome2Line } color='orange.500' />
+                            { synopsises.body }
+                        </ListItem>
+                    ))}
+                </List>
+                : <Text>Nothing</Text>
+            }
         </>
     )
 }
