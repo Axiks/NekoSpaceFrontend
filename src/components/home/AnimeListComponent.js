@@ -32,11 +32,7 @@ import { useQuery, gql } from '@apollo/client';
 import { AspectRatio } from '@chakra-ui/react'
 
 function setSelectMainName(titles){
-  console.log( 'Titles arr' )
-   console.log(titles)
   var animeName = titles.find(x => x.isMain === true);
-  console.log( 'MainName' )
-  console.log(animeName)
   return animeName
 }
 

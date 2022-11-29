@@ -32,8 +32,10 @@ import { useQuery, gql } from '@apollo/client';
 import { AspectRatio } from '@chakra-ui/react'
 import { SliderComponent } from './SliderComponent'
 import { AnimeListComponent } from './AnimeListComponent'
-import { SearchComponent } from './SearchComponent'
+import { SearchComponent } from './homeHead/SearchComponent'
 import { GET_ANIMES_LIST } from '../../GraphQL/Query/Queries'
+import { PropositionAnimeComponent } from './homeHead/PropositionAnimeComponent'
+import { HomeHeadComponent } from './homeHead/HomeHeadComponent'
 
 const images = [
   { url: "https://cdn.nekos.life/neko/neko_267.jpeg" },
@@ -56,7 +58,7 @@ export function HomePageComponent() {
     
     return(
       <div className="home">
-        <SearchComponent />
+        <HomeHeadComponent />
         <SliderComponent images={images}/>
         <AnimeListComponent animes={animes} />
       </div>
