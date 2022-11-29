@@ -36,7 +36,7 @@ function HeaderUserLoggedComponent(){
         <MenuList>
           <MenuGroup title='Profile'>
             <LinkRouter to='me'><MenuItem>My Account</MenuItem></LinkRouter>
-            <MenuItem>Setting</MenuItem>
+            <LinkRouter to='me/setting'><MenuItem>Setting</MenuItem></LinkRouter>
             <LinkRouter to='logOut'><MenuItem>LogOut</MenuItem></LinkRouter>
           </MenuGroup>
           <MenuDivider />

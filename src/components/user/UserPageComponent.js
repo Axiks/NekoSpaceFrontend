@@ -1,8 +1,12 @@
-import { Heading, Image, Stack, Text } from "@chakra-ui/react";
+import { Button, Heading, Image, Stack, Text } from "@chakra-ui/react";
 import { useSelector, useDispatch } from 'react-redux'
 import { isUserLogged, selectUser } from '../../features/oauth/userSlice'
 import UserFavoriteAnimeComponent from "./userFavoriteAnime/UserFavoriteAnimeComponent";
 import { useQuery, gql, useMutation } from '@apollo/client';
+import {
+    BrowserRouter as Router,
+    Link  as LinkRouter
+  } from "react-router-dom";
 
 
 const GET_MORE_USER_DATA = gql`
@@ -45,6 +49,9 @@ export default function UserPageComponent(){
                 <Text>User id: {nekoData.userid} </Text>
                 <Text>User email: {nekoData.email} </Text>
                 <Text>Role: {nekoData.role} </Text>
+                <LinkRouter to= { '/me/setting' }>
+                    <Button colorScheme='teal'>Setting</Button>
+                </LinkRouter>
                 <Heading size='md'>About </Heading>
                 <Text> {data.about} </Text>
                 <UserFavoriteAnimeComponent />
