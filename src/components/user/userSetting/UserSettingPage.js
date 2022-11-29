@@ -48,6 +48,8 @@ export function UserSettingPage(){
 
     return(
         <>
+        {/* Висвітлити які сабе тайтли запропонував для перекладу */}
+
             <Heading size='md'> Setting </Heading>
             <Text>User name: {nekoData.userName} </Text>
             <Text>User id: {nekoData.id} </Text>

@@ -7,6 +7,7 @@ import {
     BrowserRouter as Router,
     Link  as LinkRouter
   } from "react-router-dom";
+import UserSuggestionTitleListComponent from "./userSuggestionTitleList/UserSuggestionTitleListComponent";
 
 
 const GET_MORE_USER_DATA = gql`
@@ -16,7 +17,7 @@ query Me{
         userName,
         email,
         about,
-         favoriteAnimes{
+        favoriteAnimes{
             anime{
                 id,
             }
@@ -54,6 +55,9 @@ export default function UserPageComponent(){
                 <Text>User favorite anime: { me.favoriteAnimes.length } </Text>
                 <Text>User views anime: { me.animeViewingStatuses.length } </Text>
                 <Text>User ratings anime: { me.ratingAnimes.length } </Text>
+                
+                <Heading size='md'> User Suggestion List </Heading>
+                <UserSuggestionTitleListComponent />
 
                 <LinkRouter to= { '/me/setting' }>
                     <Button colorScheme='teal'>Setting</Button>
