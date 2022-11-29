@@ -17,6 +17,7 @@ import { FiCircle, FiCheckCircle} from "react-icons/fi";
 import { RiHome2Line, RiHome2Fill} from "react-icons/ri";
 import AddTitleSuggestionFormComponent from './suggestionTitle/AddTitleSuggestionFormComponent';
 import AddTitleSuggestionComponent from './suggestionTitle/AddTitleSuggestionComponent';
+import SuggestionLinkComponent from './suggestionLink/SuggestionLinkComponent';
 
 // const PROVIDE_TRANSLATION_SUGGESTION = gql`
 // muttation CreateTranslationProposal($anime_id: UUID!, $proposition: String!, $language: Languages!){
@@ -132,17 +133,6 @@ export default function ProvideAnimeSuggestionPage(){
             <Heading  as='h2' size='md'>Title</Heading>
             <Heading  as='h3' size='sm'>Add your version of the title</Heading>
             <AddTitleSuggestionComponent animeId= {anime.id} titles= {anime.titles} />
-            {/* <List spacing={3}>
-                {anime.titles.map(title=> (
-                    <ListItem>
-                        <Text>{ title.language }</Text>
-                        <ListIcon as={ title.isMain == true ? FiCheckCircle : FiCircle } color='green.500' />
-                        <ListIcon as={ title.isOriginal == true ? RiHome2Fill : RiHome2Line } color='orange.500' />
-                        { title.body }
-                    </ListItem>
-                ))}
-            </List>
-            <AddTitleSuggestionFormComponent animeId={anime.id} /> */}
 
             <Heading  as='h2' size='md'>Description</Heading>
             <Heading  as='h3' size='sm'>Add your version of the Description</Heading>
@@ -159,6 +149,10 @@ export default function ProvideAnimeSuggestionPage(){
                 </List>
                 : <Text>Nothing</Text>
             }
+
+            <Heading  as='h2' size='md'>Links</Heading>
+            <Heading  as='h3' size='sm'>Add links to title</Heading>
+            <SuggestionLinkComponent animeId= {anime.id}  />
         </>
     )
 }
