@@ -50,6 +50,11 @@ export default function UserPageComponent(){
                 <Text>User id: {nekoData.userid} </Text>
                 <Text>User email: {nekoData.email} </Text>
                 <Text>Role: {nekoData.role} </Text>
+                <Heading size='md'> Statistic </Heading>
+                <Text>User favorite anime: { me.favoriteAnimes.length } </Text>
+                <Text>User views anime: { me.animeViewingStatuses.length } </Text>
+                <Text>User ratings anime: { me.ratingAnimes.length } </Text>
+
                 <LinkRouter to= { '/me/setting' }>
                     <Button colorScheme='teal'>Setting</Button>
                 </LinkRouter>
