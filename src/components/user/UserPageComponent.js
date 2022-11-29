@@ -39,6 +39,7 @@ export default function UserPageComponent(){
     const { loading, error, data } = useQuery(GET_MORE_USER_DATA);
     if (loading) return <Image src="https://media.tenor.com/Gv1cMkqev0wAAAAM/anime-confused.gif"></Image>;
     if (error) return `Error! ${error}`;
+    var me = data.me
 
     console.log(data)
 
@@ -53,7 +54,7 @@ export default function UserPageComponent(){
                     <Button colorScheme='teal'>Setting</Button>
                 </LinkRouter>
                 <Heading size='md'>About </Heading>
-                <Text> {data.about} </Text>
+                <Text> About: {me.about} </Text>
                 <UserFavoriteAnimeComponent />
             </Stack>
         </div>
