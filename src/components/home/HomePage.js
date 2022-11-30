@@ -50,8 +50,8 @@ const images = [
 export function HomePageComponent() {
     const { loading, error, data } = useQuery(GET_ANIMES_LIST);
     if(!loading){
-        var animes = data.anime.nodes;
-        console.log(animes);
+        var animeEdges = data.anime.edges;
+        console.log(animeEdges);
     }
     if (loading) return <Image src="https://media.tenor.com/Gv1cMkqev0wAAAAM/anime-confused.gif"></Image>;
     if (error) return <p>Error : {error.message}</p>;
@@ -60,7 +60,7 @@ export function HomePageComponent() {
       <div className="home">
         <HomeHeadComponent />
         <SliderComponent images={images}/>
-        <AnimeListComponent animes={animes} />
+        <AnimeListComponent animeEdges={animeEdges} />
       </div>
     );
   }

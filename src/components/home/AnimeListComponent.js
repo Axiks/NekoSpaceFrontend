@@ -30,6 +30,11 @@ import {
 
 import { useQuery, gql } from '@apollo/client';
 import { AspectRatio } from '@chakra-ui/react'
+import useInfiniteScroll from 'react-infinite-scroll-hook';
+import React, { useState, useEffect } from 'react';
+import { GET_ANIMES_LIST, GET_ANIMES_LIST_PACKET_LOAD } from '../../GraphQL/Query/Queries'
+
+
 
 function setSelectMainName(titles){
   var animeName = titles.find(x => x.isMain === true);
@@ -37,13 +42,65 @@ function setSelectMainName(titles){
 }
 
 export function AnimeListComponent(props){
+  const [ animeData, setAnimeData ] = React.useState(props.animeEdges);
+  const [ before, setLoadCursor ] = React.useState(props.animeEdges[props.animeEdges.length - 1].cursor);
+
+  const { loading, error, data, fetchMore } = useQuery(GET_ANIMES_LIST_PACKET_LOAD, {
+        variables: { before },
+  });
+  // const { loading, items, hasNextPage, error, loadMore } = props.animes;
+
+  const hasNextPage = true;
+  //const loading = false
+
+
+  function loadMore(){
+    console.log('Load more')
+    
+    console.log('Cursor')
+    setLoadCursor(animeData[props.animeEdges.length - 1].cursor)
+    console.log(animeData[props.animeEdges.length - 1].cursor)
+
+    fetchMore({
+      variables: {
+        before
+      },
+    })
+
+    console.log('Data')
+    console.log(data)
+
+    console.log('Error')
+    console.log(error)
+
+    setAnimeData([...animeData, ...data.anime.edges])
+  }
+  
+
+
+  const [sentryRef] = useInfiniteScroll({
+    loading,
+    hasNextPage,
+    onLoadMore: loadMore,
+    // When there is an error, we stop infinite loading.
+    // It can be reactivated by setting "error" state as undefined.
+    // disabled: !!error,
+    // `rootMargin` is passed to `IntersectionObserver`.
+    // We can use it to trigger 'onLoadMore' when the sentry comes near to become
+    // visible, instead of becoming fully visible on the screen.
+    rootMargin: '0px 0px 400px 0px',
+  });
+
+  console.log('Anime edge')
+  console.log(props.animeEdges)
+
     return (
         <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(264px, 1fr))'>
-            {props.animes.map(anime=> (  
+            {animeData.map(data => (  
                 <Card maxW='sm'>
                     <CardBody>
                       <AspectRatio ratio={11 / 17}>
-                        <Image src= {anime.posters[0].poster.original}
+                        <Image src= {data.node.posters[0].poster.original}
                           alt='Anime name'
                           borderRadius='lg'
                           objectFit='cover'
@@ -54,9 +111,9 @@ export function AnimeListComponent(props){
                         
                         <Stack mt='6' spacing='3'>
                         <Heading size='md'>
-                          <LinkRouter to= { '/anime/' + anime.id }>
+                          <LinkRouter to= { '/anime/' + data.node.id }>
                              <LinkOverlay>
-                                {setSelectMainName(anime.titles).body}
+                                {setSelectMainName(data.node.titles).body}
                             </LinkOverlay>
                           </LinkRouter>
                         </Heading>
@@ -74,6 +131,11 @@ export function AnimeListComponent(props){
                     </CardFooter>
                 </Card>
             ))}  
+          {(loading || hasNextPage) && (
+              <Card ref={sentryRef}  maxW='sm'>
+                <>Loadding</>
+              </Card>
+            )}
         </SimpleGrid>
     )
 }
