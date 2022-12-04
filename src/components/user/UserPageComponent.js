@@ -57,7 +57,7 @@ export default function UserPageComponent(){
                 <Text>User ratings anime: { me.ratingAnimes.length } </Text>
                 
                 <Heading size='md'> User Suggestion List </Heading>
-                <UserSuggestionTitleListComponent />
+                <UserSuggestionTitleListComponent userId = {me.id} />
 
                 <LinkRouter to= { '/me/setting' }>
                     <Button colorScheme='teal'>Setting</Button>
