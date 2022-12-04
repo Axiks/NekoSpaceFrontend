@@ -18,7 +18,7 @@ import {
 const GET_ANIME_BY_ID = gql`
 query Anime($anime_id: UUID!){
     anime(where: {
-      id: {eq: $anime_id}
+      id: $anime_id
     }) {
         totalCount,
         nodes{
