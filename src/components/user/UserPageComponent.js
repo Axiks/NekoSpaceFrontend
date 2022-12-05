@@ -20,6 +20,16 @@ query Me{
         favoriteAnimes{
             anime{
                 id,
+                titles{
+                    body,
+                    isMain,
+                    language
+                },
+                posters{
+                    poster{
+                        original
+                    }
+                }
             }
         },
         ratingAnimes{
@@ -42,30 +52,26 @@ export default function UserPageComponent(){
     if (error) return `Error! ${error}`;
     var me = data.me
 
-    console.log(data)
-
     return(
-        <div>
-            <Stack>
-                <Heading size='md'>{nekoData.username} </Heading>
-                <Text>User id: {nekoData.userid} </Text>
-                <Text>User email: {nekoData.email} </Text>
-                <Text>Role: {nekoData.role} </Text>
-                <Heading size='md'> Statistic </Heading>
-                <Text>User favorite anime: { me.favoriteAnimes.length } </Text>
-                <Text>User views anime: { me.animeViewingStatuses.length } </Text>
-                <Text>User ratings anime: { me.ratingAnimes.length } </Text>
-                
-                <Heading size='md'> User Suggestion List </Heading>
-                <UserSuggestionTitleListComponent userId = {me.id} />
+        <Stack>
+            <Heading size='md'>{nekoData.username} </Heading>
+            <Text>User id: {nekoData.userid} </Text>
+            <Text>User email: {nekoData.email} </Text>
+            <Text>Role: {nekoData.role} </Text>
+            <Heading size='md'> Statistic </Heading>
+            <Text>User favorite anime: { me.favoriteAnimes.length } </Text>
+            { me.favoriteAnimes != null && me.favoriteAnimes.length > 0 ? <UserFavoriteAnimeComponent animes = {me.favoriteAnimes} /> : <Text>Hzzzzz</Text>}
+            <Text>User views anime: { me.animeViewingStatuses.length } </Text>
+            <Text>User ratings anime: { me.ratingAnimes.length } </Text>
+            
+            <Heading size='md'> User Suggestion List </Heading>
+            <UserSuggestionTitleListComponent userId = {me.id} />
 
-                <LinkRouter to= { '/me/setting' }>
-                    <Button colorScheme='teal'>Setting</Button>
-                </LinkRouter>
-                <Heading size='md'>About </Heading>
-                <Text> About: {me.about} </Text>
-                <UserFavoriteAnimeComponent />
-            </Stack>
-        </div>
+            <LinkRouter to= { '/me/setting' }>
+                <Button colorScheme='teal'>Setting</Button>
+            </LinkRouter>
+            <Heading size='md'>About </Heading>
+            <Text> About: {me.about} </Text>
+        </Stack>
     )
 }

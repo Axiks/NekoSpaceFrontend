@@ -13,7 +13,7 @@ import {
 
 
 const GET_USER_ANIME_PROPOSAL = gql`
-query Anime($user_id: UUID!){
+query AnimeTitle($user_id: UUID!){
     animeTitle(
         where:{
             creatorUserId: $user_id
@@ -49,7 +49,6 @@ query Anime($user_id: UUID!){
 `;
 
 function ProposalAcceptStatus(props){
-    console.log(props)
     var isAcceptProposal = props.isAcceptProposal
     var proposalOnProgress = <HStack>
         <Icon as={FiBookOpen}></Icon>
@@ -86,7 +85,6 @@ export function UserSuggestionTitleListComponent(props){
     if (loading) return <Image src="https://media.tenor.com/Gv1cMkqev0wAAAAM/anime-confused.gif"></Image>;
     if (error) return `Error! ${error}`;
 
-    console.log(data.animeTitle.nodes)
     return(
         <>
             <Stack spacing='4'>

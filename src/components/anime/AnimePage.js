@@ -54,7 +54,7 @@ query Anime($anime_id: UUID!){
             },
             type,
             favoriteInUsers{
-                userId
+                userId,
             },
             viewingStatusInUsers{
                 userId,
