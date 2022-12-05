@@ -1,6 +1,8 @@
 import { useQuery, gql, useMutation } from '@apollo/client';
 import { Button, Heading, Image, Text, Textarea } from "@chakra-ui/react"
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { isUserLogged, selectUser } from '../../../features/oauth/userSlice'
 
 
 const GET_MORE_USER_SETTING_DATA = gql`
@@ -28,6 +30,8 @@ mutation UpdateUser($about: String){
 `;
 
 export function UserSettingPage(){
+    const nekoTokenData = useSelector(selectUser)
+
     const [ nekoAbout, setNekoAbout ] = React.useState(null);
 
     const [mutateFunction, { updateData, updateLoading, updateError }] = useMutation(UPDATE_USER_DATA);
@@ -54,6 +58,7 @@ export function UserSettingPage(){
             <Text>User name: {nekoData.userName} </Text>
             <Text>User id: {nekoData.id} </Text>
             <Text>User email: {nekoData.email} </Text>
+            <Text>Role: {nekoTokenData.role} </Text>
             <Heading size='md'>About</Heading>
             <Textarea value={ nekoAbout == null ? nekoData.about : nekoAbout } onChange={changeNekoAbout}></Textarea>
             <Button isLoading= { updateLoading } onClick={ sendNekoData }>Save</Button>
