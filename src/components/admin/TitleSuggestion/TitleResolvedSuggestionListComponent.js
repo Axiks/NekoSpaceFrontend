@@ -37,6 +37,7 @@ const All_AVAILABLE_OFFERTS = gql`
                 }
                 creatorUserId,
                 isAcceptProposal,
+                isMain,
                 createdAt
             }
         }

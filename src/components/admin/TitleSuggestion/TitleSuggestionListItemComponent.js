@@ -27,10 +27,44 @@ mutation UpdateUserLibraryEntry($title_id: UUID!, $decision: DecisionVariants!){
   }
 `;
 
+const UPDATE_ANIME_TITLE_MAIN_STATUS = gql`
+mutation UpdateAnimeTitleMainStatus($title_id: UUID!, $is_main: Boolean!){
+    setMainTitleInput(input: {titleId: $title_id, isMain: $is_main}){
+		animeTitle{
+			id,
+			body,
+			language,
+			isOriginal,
+			isAcceptProposal,
+			language
+		},
+		error
+	}
+  }
+`;
+
 function setSelectMainName(titles){
     var animeName = titles.find(x => x.isMain === true);
     return animeName
   }
+
+function OnMainSwitch(props){
+    const [isMainSwitchValue, setMainSwitchValue] = useState(props.title.isMain);
+    // console.log(props.title.isMain)
+    // console.log(props.title)
+
+    const [mutateFunction, { loading, error }] = useMutation(UPDATE_ANIME_TITLE_MAIN_STATUS);
+
+    function onMain(titleId){
+        console.log("Is main btn " + isMainSwitchValue + titleId)
+        mutateFunction({variables: {title_id: titleId, is_main: !isMainSwitchValue }})
+        setMainSwitchValue(!isMainSwitchValue)
+    }
+
+    return(
+        <Switch onChange={() => onMain(props.title.id)} isDisabled={!props.isSwitchAvailable} defaultChecked={isMainSwitchValue} />
+    )
+}
 
 export function TitleSuggestionListItemComponent(props){
     Moment.locale('uk');
@@ -41,7 +75,7 @@ export function TitleSuggestionListItemComponent(props){
     const [isRejectButtonAvailable, setRejectButtonAvailable] = useState(props.title.isAcceptProposal == null ? true : props.title.isAcceptProposal);
 
     const [isMainSwitchAvailable, setMainSwitchAvailable] = useState(props.title.isAcceptProposal == null ? false : true);
-    const [isMainSwitchValue, setMainSwitchValue] = useState(props.title.isMain);
+
 
     const [mutateFunction, { data, loading, error, onCompleted }] = useMutation(UPDATE_ANIME_SUGGESTION_STATUS);
     if (error) return `Submission error! ${error.message}`;
@@ -127,7 +161,7 @@ export function TitleSuggestionListItemComponent(props){
                             <FormLabel htmlFor='email-alerts' mb='0'>
                                 Is main
                             </FormLabel>
-                            <Switch id='email-alerts' isDisabled={!isMainSwitchAvailable} />
+                            <OnMainSwitch title={props.title}  isSwitchAvailable={isMainSwitchAvailable} />
                         </FormControl>
                         {/* <Icon as={ title.isMain == true ? FiCheckCircle : FiCircle } color='green.500' /> */}
 
