@@ -1,4 +1,4 @@
-import { Heading, Stack, Spacer, Button, Center, Flex, Box, ButtonGroup, Avatar } from '@chakra-ui/react'
+import { Heading, Stack, Spacer, Button, Center, Flex, Box, ButtonGroup, Avatar, Menu, MenuButton, MenuList, MenuOptionGroup, MenuItemOption, MenuDivider } from '@chakra-ui/react'
 import {
   BrowserRouter as Router,
   Link
@@ -8,6 +8,7 @@ import HeaderUserUnloggedComponent from './HeaderUserUnloggedComponent'
 import { useSelector, useDispatch } from 'react-redux'
 import { updateToken, destroyToken, isTokenExist } from '../../features/oauth/tokenSlice'
 import { isUserLogged, selectUser } from '../../features/oauth/userSlice'
+import { FiCircle, FiCheckCircle, FiBookOpen, FiSlash, FiClock, FiX, FiGlobe} from "react-icons/fi";
 
 
 export function HeaderComponent() {
@@ -34,6 +35,25 @@ export function HeaderComponent() {
               </Stack>
             </Box>
             <Spacer />
+            <Box>
+            <Menu closeOnSelect={false}>
+              <MenuButton as={Button} rightIcon={<FiGlobe />} >
+                UK/JP
+              </MenuButton>
+              <MenuList minWidth='240px'>
+                <MenuOptionGroup defaultValue='uk' title='Main language' type='radio'>
+                  <MenuItemOption value='uk'>Ukrainian</MenuItemOption>
+                  <MenuItemOption value='pl'>Polish</MenuItemOption>
+                  <MenuItemOption value='it'>Italian</MenuItemOption>
+                </MenuOptionGroup>
+                <MenuDivider />
+                <MenuOptionGroup defaultValue='jp' title='Seccond language' type='radio'>
+                  <MenuItemOption value='eng'>English</MenuItemOption>
+                  <MenuItemOption value='jp'>Japanese</MenuItemOption>
+                </MenuOptionGroup>
+              </MenuList>
+            </Menu>
+            </Box>
             <Box>
               { isNekoLogged == false ? <HeaderUserUnloggedComponent /> : <HeaderUserLoggedComponent /> }
             </Box>
