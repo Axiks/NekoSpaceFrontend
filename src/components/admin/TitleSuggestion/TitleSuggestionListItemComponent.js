@@ -8,6 +8,8 @@ import { Card, CardBody, CardFooter, CardHeader, Heading, HStack, Icon, Image, L
 import Moment from 'moment';
 import { Button, ButtonGroup } from '@chakra-ui/react'
 import { FiCircle, FiCheckCircle, FiBookOpen, FiSlash, FiClock, FiX} from "react-icons/fi";
+import { FaLanguage } from 'react-icons/fa';
+import { MdLanguage } from 'react-icons/md';
 
 const UPDATE_ANIME_SUGGESTION_STATUS = gql`
 mutation UpdateUserLibraryEntry($title_id: UUID!, $decision: DecisionVariants!){
@@ -95,6 +97,10 @@ export function TitleSuggestionListItemComponent(props){
                         <HStack>
                             <Icon as={FiClock}></Icon>
                             <Text>{Moment(props.title.createdAt).format('DD.MM.YY HH:MM')}</Text>
+                        </HStack>
+                        <HStack>
+                            <Icon as={MdLanguage}></Icon>
+                            <Text>{props.title.language}</Text>
                         </HStack>
 
                     </CardBody>

@@ -20,6 +20,7 @@ const All_AVAILABLE_OFFERTS = gql`
             nodes{
                 id,
                 body,
+                language,
                 anime{
                     id,
                     posters{
