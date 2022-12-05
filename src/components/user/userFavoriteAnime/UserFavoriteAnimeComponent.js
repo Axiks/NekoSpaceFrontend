@@ -6,12 +6,9 @@ import {
     Route,
     Link as LinkRouter
   } from "react-router-dom";
+import MainTitleHelper from '../../../helpers/mainTitleHelper';
+import RootTitleHelper from '../../../helpers/rootTitleHelper';
 
-
-function setSelectMainName(titles){
-    var animeName = titles.find(x => x.isMain === true);
-    return animeName
-  }
 
 export function UserFavoriteAnimeComponent(props){
     const [ animeList, setAnimeList ] = React.useState(props.animes)
@@ -33,7 +30,9 @@ export function UserFavoriteAnimeComponent(props){
                     <CardBody>
                         <LinkRouter to= { '/anime/' + data.anime.id }>
                             <LinkOverlay>
-                                <Heading size='sm'>{ setSelectMainName(data.anime.titles).body }</Heading>
+                                {/* <Heading size='sm'>{ setSelectMainName(data.anime.titles).body }</Heading> */}
+                                <Heading size='sm' noOfLines={2}><MainTitleHelper titles= {data.anime.titles} /></Heading>
+                                <Heading size='sm' fontWeight='light' noOfLines={2}><RootTitleHelper titles= {data.anime.titles} /></Heading>
                             </LinkOverlay>
                         </LinkRouter>
                     </CardBody>

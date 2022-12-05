@@ -34,13 +34,8 @@ import useInfiniteScroll from 'react-infinite-scroll-hook';
 import React, { useState, useEffect } from 'react';
 import { GET_ANIMES_LIST, GET_ANIMES_LIST_PACKET_LOAD } from '../../GraphQL/Query/Queries'
 import { MainTitleHelper } from '../../helpers/mainTitleHelper'
-
-
-
-function setSelectMainName(titles){
-  var animeName = titles.find(x => x.isMain === true);
-  return animeName
-}
+import { RootTitleHelper } from '../../helpers/rootTitleHelper'
+import { Tooltip } from '@chakra-ui/react'
 
 export function AnimeListComponent(props){
   const [ animeData, setAnimeData ] = React.useState(props.animeEdges);
@@ -96,7 +91,7 @@ export function AnimeListComponent(props){
   console.log(props.animeEdges)
 
     return (
-        <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(264px, 1fr))'>
+        <SimpleGrid spacing={2} templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
             {animeData.map(data => (  
                 <Card maxW='sm'>
                     <CardBody>
@@ -110,27 +105,22 @@ export function AnimeListComponent(props){
                           />
                       </AspectRatio>
                         
-                        <Stack mt='6' spacing='3'>
-                        <Heading size='md'>
-                          <LinkRouter to= { '/anime/' + data.node.id }>
-                             <LinkOverlay>
-                                {/* {setSelectMainName(data.node.titles).body} */}
-                                <MainTitleHelper titles= {data.node.titles} />
-                            </LinkOverlay>
-                          </LinkRouter>
-                        </Heading>
-                        <Text>
-                        </Text>
+                        <Stack mt='2' spacing='2'>
+                            <Heading size='md' noOfLines={3}>
+                              <LinkRouter to= { '/anime/' + data.node.id }>
+                                <LinkOverlay>
+                                  <MainTitleHelper titles= {data.node.titles} />
+                                </LinkOverlay>
+                              </LinkRouter>
+                            </Heading>
+                            <Heading size='sm' fontWeight='light' noOfLines={3}>
+                              <RootTitleHelper titles= {data.node.titles} />
+                            </Heading>
                         </Stack>
                     </CardBody>
-                    <Divider />
+                    {/* <Divider />
                     <CardFooter>
-                        <HStack spacing={2}>
-                        <Tag size='md' variant='solid' colorScheme='teal'>Comedy</Tag>
-                        <Tag size='md' variant='solid' colorScheme='teal'>Romantic</Tag>
-                        <Tag size='md' variant='solid' colorScheme='teal'>School</Tag>
-                        </HStack>
-                    </CardFooter>
+                    </CardFooter> */}
                 </Card>
             ))}  
           {(loading || hasNextPage) && (

@@ -9,6 +9,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { isUserLogged, selectUser } from '../../features/oauth/userSlice'
 import { RatingComponent } from './rating/RatingConponent'
 import { LinksAnotherServiceComponent } from './linksAnotherService/linksAnotherService'
+import { MainTitleHelper } from '../../helpers/mainTitleHelper'
+import { RootTitleHelper } from '../../helpers/rootTitleHelper'
+
 import {
     BrowserRouter as Router,
     Link  as LinkRouter
@@ -25,11 +28,13 @@ query Anime($anime_id: UUID!){
             id,
             titles{
                 body,
-                language
+                language,
+                isMain
             },
             synopsises{
                 body,
-                language
+                language,
+                isMain
             },
             posters{
                 poster {
@@ -95,6 +100,7 @@ export function AnimePageComponent() {
     console.log(userId)
 
     var anime = data.anime.nodes[0];
+    console.log('ANIME obj')
     console.log(anime);
 
     // Перевіряємо чи в улюблених
@@ -157,10 +163,16 @@ export function AnimePageComponent() {
             </GridItem>
 
             <GridItem colSpan={9}>
-                <Heading as='h1' noOfLines={1}>{anime.titles[0].body}</Heading>
+                {/* <Heading as='h1' noOfLines={1}>{anime.titles[0].body}</Heading>
                 { anime.titles[1] != null ? (<Heading as='h6' size='xs' noOfLines={1}>
                     <Text as='i'>{anime.titles[1].body}</Text>
-                </Heading>) : (<div />)}
+                </Heading>) : (<div />)} */}
+                <Heading as='h1' size='md' noOfLines={1}>
+                    <MainTitleHelper  titles= { anime.titles } />
+                </Heading>
+                <Heading as='h2' size='md' noOfLines={1}>
+                    <RootTitleHelper  titles= { anime.titles } />
+                </Heading>
                 
                 {/* // Responsive version */}
                 <Text noOfLines={[1, 2, 3]}>
