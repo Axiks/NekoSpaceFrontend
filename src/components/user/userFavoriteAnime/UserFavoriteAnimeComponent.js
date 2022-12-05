@@ -1,6 +1,12 @@
-import { AspectRatio, Heading, Image, SimpleGrid, Text } from '@chakra-ui/react';
+import { AspectRatio, Heading, Image, LinkOverlay, SimpleGrid, Text } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
 import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
+import {
+    BrowserRouter as Router,
+    Route,
+    Link as LinkRouter
+  } from "react-router-dom";
+
 
 function setSelectMainName(titles){
     var animeName = titles.find(x => x.isMain === true);
@@ -17,15 +23,19 @@ export function UserFavoriteAnimeComponent(props){
         <SimpleGrid spacing={2} templateColumns='repeat(auto-fill, minmax(140px, 1fr))'>
             {props.animes.map(data => (
                 <Card>
-                        <AspectRatio ratio={11 / 17}>
-                            <Image
-                                    objectFit='cover'
-                                    src={data.anime.posters[0].poster.original}
-                                    alt='Caffe Latte'
-                                />
-                        </AspectRatio>
+                    <AspectRatio ratio={11 / 17}>
+                        <Image
+                                objectFit='cover'
+                                src={data.anime.posters[0].poster.original}
+                                alt='Caffe Latte'
+                            />
+                    </AspectRatio>
                     <CardBody>
-                        <Heading size='sm'>{ setSelectMainName(data.anime.titles).body }</Heading>
+                        <LinkRouter to= { '/anime/' + data.anime.id }>
+                            <LinkOverlay>
+                                <Heading size='sm'>{ setSelectMainName(data.anime.titles).body }</Heading>
+                            </LinkOverlay>
+                        </LinkRouter>
                     </CardBody>
                 </Card>
             ))}
