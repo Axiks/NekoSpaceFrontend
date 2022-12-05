@@ -11,7 +11,6 @@ import {
   } from "react-router-dom";
 
 
-
 const GET_USER_ANIME_PROPOSAL = gql`
 query AnimeTitle($user_id: UUID!){
     animeTitle(
@@ -106,7 +105,7 @@ export function UserSuggestionTitleListComponent(props){
                                 <LinkRouter to= { '/anime/' + title.anime.id }>
                                     <LinkOverlay>
                                         <Heading size='md'>{title.body}</Heading>
-                                        <Heading size='sm'>{setSelectMainName(title.anime.titles).body}</Heading>
+                                        <Heading size='sm' fontWeight='light'>{setSelectMainName(title.anime.titles).body}</Heading>
                                     </LinkOverlay>
                                 </LinkRouter>
                             </CardHeader>
