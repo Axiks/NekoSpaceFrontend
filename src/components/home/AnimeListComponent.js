@@ -33,6 +33,7 @@ import { AspectRatio } from '@chakra-ui/react'
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 import React, { useState, useEffect } from 'react';
 import { GET_ANIMES_LIST, GET_ANIMES_LIST_PACKET_LOAD } from '../../GraphQL/Query/Queries'
+import { MainTitleHelper } from '../../helpers/mainTitleHelper'
 
 
 
@@ -113,7 +114,8 @@ export function AnimeListComponent(props){
                         <Heading size='md'>
                           <LinkRouter to= { '/anime/' + data.node.id }>
                              <LinkOverlay>
-                                {setSelectMainName(data.node.titles).body}
+                                {/* {setSelectMainName(data.node.titles).body} */}
+                                <MainTitleHelper titles= {data.node.titles} />
                             </LinkOverlay>
                           </LinkRouter>
                         </Heading>
