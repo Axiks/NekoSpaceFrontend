@@ -4,12 +4,12 @@ import {
     Link  as LinkRouter
   } from "react-router-dom";
   import { useQuery, gql, useMutation } from '@apollo/client';
-import { Card, CardBody, CardFooter, CardHeader, Heading, HStack, Icon, Image, LinkOverlay, Stack, Text } from "@chakra-ui/react";
+import { Card, CardBody, CardFooter, CardHeader, FormControl, FormLabel, Heading, HStack, Icon, Image, LinkOverlay, Stack, Text } from "@chakra-ui/react";
 import Moment from 'moment';
 import { Button, ButtonGroup } from '@chakra-ui/react'
 import { FiCircle, FiCheckCircle, FiBookOpen, FiSlash, FiClock, FiX} from "react-icons/fi";
-import { FaLanguage } from 'react-icons/fa';
 import { MdLanguage } from 'react-icons/md';
+import { Switch } from '@chakra-ui/react'
 
 const UPDATE_ANIME_SUGGESTION_STATUS = gql`
 mutation UpdateUserLibraryEntry($title_id: UUID!, $decision: DecisionVariants!){
@@ -40,6 +40,9 @@ export function TitleSuggestionListItemComponent(props){
     const [isAcceptButtonAvailable, setAcceptButtonAvailable] = useState(props.title.isAcceptProposal == null ? true : !props.title.isAcceptProposal);
     const [isRejectButtonAvailable, setRejectButtonAvailable] = useState(props.title.isAcceptProposal == null ? true : props.title.isAcceptProposal);
 
+    const [isMainSwitchAvailable, setMainSwitchAvailable] = useState(props.title.isAcceptProposal == null ? false : true);
+    const [isMainSwitchValue, setMainSwitchValue] = useState(props.title.isMain);
+
     const [mutateFunction, { data, loading, error, onCompleted }] = useMutation(UPDATE_ANIME_SUGGESTION_STATUS);
     if (error) return `Submission error! ${error.message}`;
 
@@ -50,6 +53,8 @@ export function TitleSuggestionListItemComponent(props){
         mutateFunction({variables: {title_id: titleId, decision: "ACCEPT" }})
         setAcceptButtonAvailable(false)
         setRejectButtonAvailable(true)
+
+        setMainSwitchAvailable(true)
     }
 
     function onReject(titleId){
@@ -59,6 +64,8 @@ export function TitleSuggestionListItemComponent(props){
         mutateFunction({variables: {title_id: titleId, decision: "REJECT" }})
         setAcceptButtonAvailable(true)
         setRejectButtonAvailable(false)
+
+        setMainSwitchAvailable(true)
     }
 
 
@@ -116,7 +123,12 @@ export function TitleSuggestionListItemComponent(props){
                                 Reject
                             </Button>
                         </ButtonGroup>
-                        
+                        <FormControl display='flex' alignItems='center' >
+                            <FormLabel htmlFor='email-alerts' mb='0'>
+                                Is main
+                            </FormLabel>
+                            <Switch id='email-alerts' isDisabled={!isMainSwitchAvailable} />
+                        </FormControl>
                         {/* <Icon as={ title.isMain == true ? FiCheckCircle : FiCircle } color='green.500' /> */}
 
                     </CardFooter>
