@@ -91,11 +91,10 @@ export function AnimeListComponent(props){
   console.log(props.animeEdges)
 
     return (
-        <SimpleGrid spacing={2} templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
+        <SimpleGrid spacing={2} templateColumns='repeat(auto-fill, minmax(180px, 1fr))'>
             {animeData.map(data => (  
                 <Card maxW='sm'>
-                    <CardBody>
-                      <AspectRatio ratio={11 / 17}>
+                      <AspectRatio ratio={12 / 17}>
                         <Image src= {data.node.posters[0].poster.original}
                           alt='Anime name'
                           borderRadius='lg'
@@ -104,6 +103,8 @@ export function AnimeListComponent(props){
                           fallbackSrc='https://i.kym-cdn.com/photos/images/original/000/290/992/0aa.jpg'
                           />
                       </AspectRatio>
+                    <CardBody>
+
                         
                         <Stack mt='2' spacing='2'>
                             <Heading size='md' noOfLines={3}>
