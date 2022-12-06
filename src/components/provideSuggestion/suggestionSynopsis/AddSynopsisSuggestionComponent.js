@@ -1,21 +1,21 @@
-import { List, ListIcon, ListItem, Text } from "@chakra-ui/react"
-import AddTitleSuggestionFormComponent from "./AddTitleSuggestionFormComponent"
+import { Box, List, ListIcon, ListItem, Text } from "@chakra-ui/react"
+import AddTitleSuggestionFormComponent from "../suggestionTitle/AddTitleSuggestionFormComponent"
 import { FiCircle, FiCheckCircle} from "react-icons/fi";
 import { RiHome2Line, RiHome2Fill} from "react-icons/ri";
 import React, { useState, useEffect } from 'react';
+import AddSynopsisSuggestionFormComponent from "./AddSynopsisSuggestionFormComponent";
 
-
-export function AddTitleSuggestionComponent(props){
+export function AddSynopsisSuggestionComponent(props){
     // Хочу доюаити елемент в ліст після натискання кнопки
-    const [ suggestionsList, setSuggestionsList ] = React.useState(props.titles);
+    const [ suggestionsList, setSuggestionsList ] = React.useState(props.synopsis_list);
 
     function handleLanguageSuggestion(suggestionValue){
         var newSuggestionsList = [...suggestionsList, suggestionValue]
         setSuggestionsList(newSuggestionsList)
     }
 
-    return(
-        <div>
+    return (
+        <Box>
             <List spacing={3}>
                 {suggestionsList.map(title=> (
                     <ListItem>
@@ -26,9 +26,9 @@ export function AddTitleSuggestionComponent(props){
                     </ListItem>
                 ))}
             </List>
-            <AddTitleSuggestionFormComponent animeId={ props.animeId } onHandleLanguageSuggestion= {handleLanguageSuggestion} />
-        </div>
+            <AddSynopsisSuggestionFormComponent animeId={ props.animeId } onHandleLanguageSuggestion= {handleLanguageSuggestion} />
+        </Box>
     )
 }
 
-export default AddTitleSuggestionComponent
+export default AddSynopsisSuggestionComponent

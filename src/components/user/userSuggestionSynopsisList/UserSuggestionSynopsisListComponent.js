@@ -9,7 +9,6 @@ import {
     Route,
     Link as LinkRouter
   } from "react-router-dom";
-import MainTitleHelper from '../../../helpers/mainTitleHelper';
 
 
 const GET_USER_ANIME_PROPOSAL = gql`
@@ -76,7 +75,7 @@ function setSelectMainName(titles){
     return animeName
   }
 
-export function UserSuggestionTitleListComponent(props){
+export function UserSuggestionSynopsisListComponent(props){
     Moment.locale('uk');
     var user_id = props.userId
     const { loading, error, data } = useQuery(GET_USER_ANIME_PROPOSAL, {
@@ -106,7 +105,7 @@ export function UserSuggestionTitleListComponent(props){
                                 <LinkRouter to= { '/anime/' + title.anime.id }>
                                     <LinkOverlay>
                                         <Heading size='md'>{title.body}</Heading>
-                                        <Heading size='sm' fontWeight='light'><MainTitleHelper titles={title.anime.titles} /></Heading>
+                                        <Heading size='sm' fontWeight='light'>{setSelectMainName(title.anime.titles).body}</Heading>
                                     </LinkOverlay>
                                 </LinkRouter>
                             </CardHeader>
@@ -129,4 +128,4 @@ export function UserSuggestionTitleListComponent(props){
     )
 }
 
-export default UserSuggestionTitleListComponent
+export default UserSuggestionSynopsisListComponent

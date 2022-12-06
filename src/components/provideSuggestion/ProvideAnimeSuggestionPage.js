@@ -18,6 +18,8 @@ import { RiHome2Line, RiHome2Fill} from "react-icons/ri";
 import AddTitleSuggestionFormComponent from './suggestionTitle/AddTitleSuggestionFormComponent';
 import AddTitleSuggestionComponent from './suggestionTitle/AddTitleSuggestionComponent';
 import SuggestionLinkComponent from './suggestionLink/SuggestionLinkComponent';
+import AddSynopsisSuggestionComponent from './suggestionSynopsis/AddSynopsisSuggestionComponent';
+import RootTitleHelper from '../../helpers/rootTitleHelper';
 
 // const PROVIDE_TRANSLATION_SUGGESTION = gql`
 // muttation CreateTranslationProposal($anime_id: UUID!, $proposition: String!, $language: Languages!){
@@ -50,8 +52,13 @@ const GET_ANIME_BY_ID = gql`
                     creatorUserId
                 },
                 synopsises{
+                    id,
                     body,
-                    language
+                    language,
+                    isAcceptProposal,
+                    isMain,
+                    isOriginal,
+                    creatorUserId,
                 },
                 posters{
                     poster {
@@ -115,10 +122,13 @@ export default function ProvideAnimeSuggestionPage(){
                 objectFit='cover'
                 fallbackSrc='https://i.kym-cdn.com/photos/images/original/000/290/992/0aa.jpg'
             />
-            <Heading as='h1' noOfLines={1}>{anime.titles[0].body}</Heading>
+            {/* <Heading as='h1' noOfLines={1}>{anime.titles[0].body}</Heading>
             { anime.titles[1] != null ? (<Heading as='h6' size='xs' noOfLines={1}>
                 <Text as='i'>{anime.titles[1].body}</Text>
-            </Heading>) : (<div />)}
+            </Heading>) : (<div />)} */}
+            <Heading as='h1' noOfLines={1}>
+                <RootTitleHelper titles={anime.titles} />
+            </Heading>
             <Text>Country: Japan</Text>
             <Text>Duration: { anime.episodesDurationSeconds ? (anime.episodesDurationSeconds) : ( <i>none</i> ) }</Text>
             <LinksAnotherServiceComponent linksToAnotherService= { links } />
@@ -135,20 +145,8 @@ export default function ProvideAnimeSuggestionPage(){
             <AddTitleSuggestionComponent animeId= {anime.id} titles= {anime.titles} />
 
             <Heading  as='h2' size='md'>Description</Heading>
-            <Heading  as='h3' size='sm'>Add your version of the Description</Heading>
-            { anime.synopsises.length != 0 ?
-                <List spacing={3}>
-                    {anime.synopsises.map(synopsises=> (
-                        <ListItem>
-                            <Text>{ synopsises.language }</Text>
-                            <ListIcon as={ synopsises.isMain == true ? FiCheckCircle : FiCircle } color='green.500' />
-                            <ListIcon as={ synopsises.isOriginal == true ? RiHome2Fill : RiHome2Line } color='orange.500' />
-                            { synopsises.body }
-                        </ListItem>
-                    ))}
-                </List>
-                : <Text>Nothing</Text>
-            }
+            <Heading  as='h3' size='sm'>Add your version of the description</Heading>
+            <AddSynopsisSuggestionComponent animeId= {anime.id} synopsis_list= {anime.synopsises} />
 
             <Heading  as='h2' size='md'>Links</Heading>
             <Heading  as='h3' size='sm'>Add links to title</Heading>
