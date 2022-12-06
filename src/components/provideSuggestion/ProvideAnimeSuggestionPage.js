@@ -1,5 +1,5 @@
 import { useQuery, gql, useMutation } from '@apollo/client';
-import { Button, Grid, GridItem } from '@chakra-ui/react'
+import { Box, Button, Grid, GridItem } from '@chakra-ui/react'
 import { Image } from '@chakra-ui/react'
 import { Heading, Text, Link } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
@@ -20,6 +20,7 @@ import AddTitleSuggestionComponent from './suggestionTitle/AddTitleSuggestionCom
 import SuggestionLinkComponent from './suggestionLink/SuggestionLinkComponent';
 import AddSynopsisSuggestionComponent from './suggestionSynopsis/AddSynopsisSuggestionComponent';
 import RootTitleHelper from '../../helpers/rootTitleHelper';
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 
 // const PROVIDE_TRANSLATION_SUGGESTION = gql`
 // muttation CreateTranslationProposal($anime_id: UUID!, $proposition: String!, $language: Languages!){
@@ -115,42 +116,120 @@ export default function ProvideAnimeSuggestionPage(){
     if(animeLinks.anilistId != null) links.push({ label: 'Anilist', link: 'https://anilist.co/anime/' + animeLinks.anilistId });
 
     return(
-        <> 
-            <Image src= {anime.posters[0].poster.original}
+        <>
+            <Grid
+                templateRows='repeat(1, 1fr)'
+                templateColumns='repeat(12, 1fr)'
+                gap={4}
+                >
+                <GridItem colSpan={2}>
+                    <Image src= {anime.posters[0].poster.original}
+                    alt='Anime name'
+                    borderRadius='lg'
+                    objectFit='cover'
+                    fallbackSrc='https://i.kym-cdn.com/photos/images/original/000/290/992/0aa.jpg'
+                    />
+                </GridItem>
+                <GridItem colSpan={10}>
+                    <Heading as='h1' noOfLines={1}>
+                        <RootTitleHelper titles={anime.titles} />
+                    </Heading>
+                    <Text>Country: Japan</Text>
+                    <Text>Duration: { anime.episodesDurationSeconds ? (anime.episodesDurationSeconds) : ( <i>none</i> ) }</Text>
+                </GridItem>
+                <GridItem colSpan={12}>
+                    <LinksAnotherServiceComponent linksToAnotherService= { links } />
+                </GridItem>
+            </Grid>
+            <Tabs>
+                <TabList>
+                    <Tab>Poster</Tab>
+                    <Tab>Title</Tab>
+                    <Tab>Description</Tab>
+                    <Tab>Links</Tab>
+                </TabList>
+
+                <TabPanels>
+                    <TabPanel>
+                        <Heading  as='h3' size='sm'>Add your version of the poster</Heading>
+                        <SuggestionPostersComponent animePosters= {anime.posters} />
+                    </TabPanel>
+                    <TabPanel>
+                        <Heading  as='h3' size='sm'>Add your version of the title</Heading>
+                        <AddTitleSuggestionComponent animeId= {anime.id} titles= {anime.titles} />
+                    </TabPanel>
+                    <TabPanel>
+                        <Heading  as='h3' size='sm'>Add your version of the description</Heading>
+                        <AddSynopsisSuggestionComponent animeId= {anime.id} synopsis_list= {anime.synopsises} />
+                    </TabPanel>
+                    <TabPanel>
+                        <Heading  as='h3' size='sm'>Add links to title</Heading>
+                        <SuggestionLinkComponent animeId= {anime.id}  />
+                    </TabPanel>
+                </TabPanels>
+            </Tabs>
+
+            {/* <Image src= {anime.posters[0].poster.original}
                 alt='Anime name'
                 borderRadius='lg'
                 objectFit='cover'
                 fallbackSrc='https://i.kym-cdn.com/photos/images/original/000/290/992/0aa.jpg'
-            />
-            {/* <Heading as='h1' noOfLines={1}>{anime.titles[0].body}</Heading>
-            { anime.titles[1] != null ? (<Heading as='h6' size='xs' noOfLines={1}>
-                <Text as='i'>{anime.titles[1].body}</Text>
-            </Heading>) : (<div />)} */}
-            <Heading as='h1' noOfLines={1}>
-                <RootTitleHelper titles={anime.titles} />
-            </Heading>
-            <Text>Country: Japan</Text>
-            <Text>Duration: { anime.episodesDurationSeconds ? (anime.episodesDurationSeconds) : ( <i>none</i> ) }</Text>
-            <LinksAnotherServiceComponent linksToAnotherService= { links } />
+            /> */}
+            {/* <Box>
+                <Heading as='h1' noOfLines={1}>
+                    <RootTitleHelper titles={anime.titles} />
+                </Heading>
+                <Text>Country: Japan</Text>
+                <Text>Duration: { anime.episodesDurationSeconds ? (anime.episodesDurationSeconds) : ( <i>none</i> ) }</Text>
+            </Box> */}
+            {/* <LinksAnotherServiceComponent linksToAnotherService= { links } />
 
-            <Heading  as='h2' size='md'>Poster</Heading>
+            <Tabs>
+                <TabList>
+                    <Tab>Poster</Tab>
+                    <Tab>Title</Tab>
+                    <Tab>Description</Tab>
+                    <Tab>Links</Tab>
+                </TabList>
+
+                <TabPanels>
+                    <TabPanel>
+                        <Heading  as='h3' size='sm'>Add your version of the poster</Heading>
+                        <SuggestionPostersComponent animePosters= {anime.posters} />
+                    </TabPanel>
+                    <TabPanel>
+                        <Heading  as='h3' size='sm'>Add your version of the title</Heading>
+                        <AddTitleSuggestionComponent animeId= {anime.id} titles= {anime.titles} />
+                    </TabPanel>
+                    <TabPanel>
+                        <Heading  as='h3' size='sm'>Add your version of the description</Heading>
+                        <AddSynopsisSuggestionComponent animeId= {anime.id} synopsis_list= {anime.synopsises} />
+                    </TabPanel>
+                    <TabPanel>
+                        <Heading  as='h3' size='sm'>Add links to title</Heading>
+                        <SuggestionLinkComponent animeId= {anime.id}  />
+                    </TabPanel>
+                </TabPanels>
+            </Tabs> */}
+
+            {/* <Heading  as='h2' size='md'>Poster</Heading>
             <Heading  as='h3' size='sm'>Add your version of the poster</Heading>
             <SuggestionPostersComponent animePosters= {anime.posters} />
             <Button colorScheme='teal' variant='outline'>
                 Upload image
-            </Button>
+            </Button> */}
 
-            <Heading  as='h2' size='md'>Title</Heading>
+            {/* <Heading  as='h2' size='md'>Title</Heading>
             <Heading  as='h3' size='sm'>Add your version of the title</Heading>
-            <AddTitleSuggestionComponent animeId= {anime.id} titles= {anime.titles} />
+            <AddTitleSuggestionComponent animeId= {anime.id} titles= {anime.titles} /> */}
 
-            <Heading  as='h2' size='md'>Description</Heading>
+            {/* <Heading  as='h2' size='md'>Description</Heading>
             <Heading  as='h3' size='sm'>Add your version of the description</Heading>
-            <AddSynopsisSuggestionComponent animeId= {anime.id} synopsis_list= {anime.synopsises} />
+            <AddSynopsisSuggestionComponent animeId= {anime.id} synopsis_list= {anime.synopsises} /> */}
 
-            <Heading  as='h2' size='md'>Links</Heading>
+            {/* <Heading  as='h2' size='md'>Links</Heading>
             <Heading  as='h3' size='sm'>Add links to title</Heading>
-            <SuggestionLinkComponent animeId= {anime.id}  />
+            <SuggestionLinkComponent animeId= {anime.id}  /> */}
         </>
     )
 }
