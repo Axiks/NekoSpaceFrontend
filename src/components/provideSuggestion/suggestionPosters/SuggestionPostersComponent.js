@@ -3,6 +3,7 @@ import { Gallery } from "react-grid-gallery";
 import { useState } from "react";
 
 
+
 const IMAGES_LIST = [
     {
        src: "https://c2.staticflickr.com/9/8817/28973449265_07e3aa5d2e_b.jpg",
@@ -29,6 +30,7 @@ const IMAGES_LIST = [
  ];
 
 function setAnimePosterImages(animePosters){
+
     var images = []
     animePosters.forEach(getAnimePosters);
 
