@@ -35,15 +35,15 @@ function setAnimePosterImages(animePosters){
     function getAnimePosters(item){
         images.push( {
             src: item.poster.original,
-            isSelected: false
+            isSelected: true
         })
     }
 
-    images.push({
-        src: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_b.jpg",
+    // images.push({
+    //     src: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_b.jpg",
 
-        isSelected: true
-     })
+    //     isSelected: true
+    //  })
 
     return images
 }

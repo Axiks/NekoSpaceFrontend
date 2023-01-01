@@ -37,14 +37,37 @@ import { GET_ANIMES_LIST } from '../../GraphQL/Query/Queries'
 import { PropositionAnimeComponent } from './homeHead/PropositionAnimeComponent'
 import { HomeHeadComponent } from './homeHead/HomeHeadComponent'
 
+// const images = [
+//   { url: "https://cdn.nekos.life/neko/neko_267.jpeg" },
+//   { url: "https://cdn.nekos.life/neko/neko250.jpg" },
+//   { url: "https://cdn.nekos.life/neko/neko_225.png" },
+//   { url: "https://cdn.nekos.life/neko/neko217.png" },
+//   { url: "https://cdn.nekos.life/neko/neko361.jpeg" },
+//   { url: "https://cdn.nekos.life/neko/neko025.png" },
+//   { url: "https://cdn.nekos.life/neko/neko338.jpeg" },
+// ];
+
 const images = [
-  { url: "https://cdn.nekos.life/neko/neko_267.jpeg" },
-  { url: "https://cdn.nekos.life/neko/neko250.jpg" },
-  { url: "https://cdn.nekos.life/neko/neko_225.png" },
-  { url: "https://cdn.nekos.life/neko/neko217.png" },
-  { url: "https://cdn.nekos.life/neko/neko361.jpeg" },
-  { url: "https://cdn.nekos.life/neko/neko025.png" },
-  { url: "https://cdn.nekos.life/neko/neko338.jpeg" },
+  {
+     url: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/142838-tynuN00wxmKO.jpg",
+     animeId: "1a103d61-ec9e-47cc-b7e3-a3eadb4a8fdc"
+  },
+  { 
+    url: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/130003-Ht7myAxpdNPo.jpg",
+    animeId: "3d9a4bfe-b067-43a7-9884-3bdd9d6e4e93"
+  },
+  {
+     url: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/21-wf37VakJmZqs.jpg",
+     animeId: "b2d4cd90-2a11-4b0a-a31d-72a392a88efd"
+  },
+  { 
+    url: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/125367-hGPJLSNfprO3.jpg",
+    animeId: "d0599cd8-24f6-41ea-bc32-8c88309c86d9"
+   },
+  { 
+    url: "https://s4.anilist.co/file/anilistcdn/media/anime/banner/124845-uw8Fiw3kWtbj.jpg",
+    animeId: "b2d4cd90-2a11-4b0a-a31d-72a392a88efd"
+   },
 ];
 
 export function HomePageComponent() {
@@ -60,6 +83,7 @@ export function HomePageComponent() {
       <div className="home">
         <HomeHeadComponent />
         <SliderComponent images={images}/>
+        <Box h="40px"></Box>
         <AnimeListComponent animeEdges={animeEdges} />
       </div>
     );

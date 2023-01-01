@@ -23,7 +23,7 @@ export default function SignUpFormComponent(){
     const [password, setPassword] = useState('');
 
     const userRegistration = async (email, password, confirmPassword, username) => {
-        await fetch('https://dev.neko3.space/api/Account/Registration', {
+        await fetch(process.env.REACT_APP_URL + '/api/Account/Registration', {
             method: "POST", // default, so we can ignore
             body: JSON.stringify({
                 email: email,

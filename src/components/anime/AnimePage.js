@@ -1,5 +1,5 @@
 import { useQuery, gql, useMutation } from '@apollo/client';
-import { Button, Grid, GridItem } from '@chakra-ui/react'
+import { Box, Button, Grid, GridItem } from '@chakra-ui/react'
 import { Image } from '@chakra-ui/react'
 import { Heading, Text, Link } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
@@ -133,6 +133,7 @@ export function AnimePageComponent() {
 
     // Статус трансляції
     var hasIredData = anime.aired != null;
+    
 
    // const selectNekoData = useSelector(selectUser)
     
@@ -150,7 +151,7 @@ export function AnimePageComponent() {
             <GridItem w='100%' h='10' bg='blue.500' />
             <GridItem w='100%' h='10' bg='blue.500' />
             <GridItem w='100%' h='10' bg='blue.500' /> */}
-            <GridItem colSpan={3}>
+            <GridItem colSpan={2}>
                 <Image
                     src= {anime.posters[0].poster.original}
                     alt='Anime name'
@@ -162,7 +163,7 @@ export function AnimePageComponent() {
                     />
             </GridItem>
 
-            <GridItem colSpan={9}>
+            <GridItem colSpan={10}>
                 {/* <Heading as='h1' noOfLines={1}>{anime.titles[0].body}</Heading>
                 { anime.titles[1] != null ? (<Heading as='h6' size='xs' noOfLines={1}>
                     <Text as='i'>{anime.titles[1].body}</Text>
@@ -187,18 +188,22 @@ export function AnimePageComponent() {
                 { anime.premier != null ? <Text>Premiered: { anime.premier.sezon } { anime.premier.year }</Text> : '' }  
                 <Text>Duration: { anime.episodesDurationSeconds ? (anime.episodesDurationSeconds) : ( <i>none</i> ) }</Text>
                 <Text>Episodes count: { anime.numEpisodes }</Text>
+                <LinksAnotherServiceComponent linksToAnotherService= { links } />
 
             </GridItem>
             <GridItem colSpan={3}>
                 { isNekoLogged ? <FavoriteButtonComponent animeId= {anime.id} isFavoriteStatus= { isNekoFavorite } /> : null }
+                <Box h="12px"></Box>
                 { isNekoLogged ? <ViewStatusComponent animeId= {anime.id} viewStatus= { nekoViewStatus != null ? nekoViewStatus.status : null } /> : null }
+                <Box h="4px"></Box>
                 { isNekoLogged ? <RatingComponent animeId= {anime.id} userRating = { nekoRating != null ? nekoRating.ratingValue : null } /> : null }
-                <LinksAnotherServiceComponent linksToAnotherService= { links } />
+                {/* <LinksAnotherServiceComponent linksToAnotherService= { links } /> */}
+                <Box h="12px"></Box>
                 <LinkRouter to= { '/provideSuggestion/' + anime_id }>
                     <Button colorScheme='teal'>Provide Suggestion</Button>
                 </LinkRouter>
             </GridItem>
-            <GridItem colSpan={9} bg='papayawhip' >
+            <GridItem colSpan={9} >
             </GridItem>
         </Grid>
     );

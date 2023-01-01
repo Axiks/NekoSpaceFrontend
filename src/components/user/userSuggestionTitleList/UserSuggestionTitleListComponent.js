@@ -10,6 +10,7 @@ import {
     Link as LinkRouter
   } from "react-router-dom";
 import MainTitleHelper from '../../../helpers/mainTitleHelper';
+import RootTitleHelper from '../../../helpers/rootTitleHelper';
 
 
 const GET_USER_ANIME_PROPOSAL = gql`
@@ -106,7 +107,7 @@ export function UserSuggestionTitleListComponent(props){
                                 <LinkRouter to= { '/anime/' + title.anime.id }>
                                     <LinkOverlay>
                                         <Heading size='md'>{title.body}</Heading>
-                                        <Heading size='sm' fontWeight='light'><MainTitleHelper titles={title.anime.titles} /></Heading>
+                                        <Heading size='sm' fontWeight='light'><RootTitleHelper titles={title.anime.titles} /></Heading>
                                     </LinkOverlay>
                                 </LinkRouter>
                             </CardHeader>

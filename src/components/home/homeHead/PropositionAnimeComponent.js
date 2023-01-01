@@ -9,39 +9,39 @@ import {
 
   var animeProposition = [
     {
-      animeId:"3919c495-1ae2-4cbb-8d35-409aef10cab6",
+      animeId:"684b81a2-638a-4fa0-a014-bcab3af25d08",
       name:"Toradora"
     },
     {
-      animeId:"699a7529-961f-4a3f-b0ad-740606eaba0d",
+      animeId:"32664d4c-a553-437a-b2df-1d3b9fe5b1e3",
       name:"Clannad"
     },
     {
-      animeId:"8107e880-7161-4b1e-b79c-1df311a18adc",
+      animeId:"a1fa97d2-73d3-46d7-840a-3e1da055e8c0",
       name:"Welcome to NHK"
     },
     {
-      animeId:"e97708ac-f3a2-4cf4-9f3e-9013dc4569af",
+      animeId:"1a103d61-ec9e-47cc-b7e3-a3eadb4a8fdc",
       name:"Spy x Family Part 2"
     },
     {
-      animeId:"fe6682ac-562c-4ef2-a75d-d402cdec2680",
+      animeId:"4bf44f2c-b1e1-48f5-b5e9-31f841306480",
       name:"Tensei shitara Ken Deshita"
     },
     {
-      animeId:"ccecf2e5-bfd2-4dec-b316-7fbefbd22132",
+      animeId:"d6fa41f4-4c7b-4a70-a9df-65d965aba01a",
       name:"Akuyaku Reijou nano de Last Boss wo Kattemimashita"
     },
     {
-      animeId:"591f6e6b-a5be-414a-ac49-f96fdc9e05c3",
+      animeId:"3d9a4bfe-b067-43a7-9884-3bdd9d6e4e93",
       name:"Bocchi the Rock!"
     },
     {
-      animeId:"83fa0aad-0037-4d9e-a230-947b96ad91a1",
+      animeId:"66cb6a23-2ce2-4747-9ee8-3d61b50ece3b",
       name:"Yuusha Party wo Tsuihou sareta Beast Tamer, Saikyoushu no Nekomimi Shoujo to Deau"
     },
     {
-      animeId:"2c72b6e6-1af3-43c4-83f6-1c1fc00773a3",
+      animeId:"6b2d9395-53c6-49b4-ba92-daff325e27b1",
       name:"Do It Yourself!!"
     }
   ]

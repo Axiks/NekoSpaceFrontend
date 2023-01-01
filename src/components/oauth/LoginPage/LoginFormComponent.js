@@ -30,6 +30,8 @@ const LOGIN_MUTATION = gql`
 `;
 
 export default function LoginFormComponent(){
+    // console.log("TeST");
+    // console.log(process.env.REACT_APP_URL);
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
@@ -38,7 +40,7 @@ export default function LoginFormComponent(){
     const [password, setPassword] = useState('');
 
     const userLogin = async (username, password) => {
-        await fetch('https://dev.neko3.space/api/Account/SignIn', {
+        await fetch(process.env.REACT_APP_URL + '/api/Account/SignIn', {
             method: "POST", // default, so we can ignore
             body: JSON.stringify({
                 username: username,

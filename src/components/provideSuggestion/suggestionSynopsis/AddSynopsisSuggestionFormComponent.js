@@ -3,6 +3,7 @@ import {
     EditableInput,
     EditableTextarea,
     EditablePreview,
+    Textarea,
   } from '@chakra-ui/react'
   import { Stack, Input } from '@chakra-ui/react'
   import { Select } from '@chakra-ui/react'
@@ -69,7 +70,7 @@ export function AddSynopsisSuggestionFormComponent(props){
                         )
                     })}
                 </Select>
-                <Input placeholder='Title name' size='md' value= { suggestionBody} onChange={ changeSuggestionBody } />
+                <Textarea placeholder='Title name' size='md' value= { suggestionBody} onChange={ changeSuggestionBody } />
                 <Select placeholder='Source' size='md' >
                     { source.map(item => {
                         return (

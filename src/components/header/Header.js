@@ -26,12 +26,12 @@ export function HeaderComponent() {
                  <Link to="/">
                   <Button colorScheme='teal' variant='ghost'>Home</Button>
                 </Link>
-                <Link to="/anime">
+                {/* <Link to="/anime">
                   <Button colorScheme='teal' variant='ghost'>Anime</Button>
                 </Link>
                 <Link to="/character">
                   <Button colorScheme='teal' variant='ghost'>Character</Button>
-                </Link>
+                </Link> */}
               </Stack>
             </Box>
             <Spacer />

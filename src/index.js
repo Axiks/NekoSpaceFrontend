@@ -7,10 +7,12 @@ import { ApolloClient, createHttpLink, InMemoryCache, ApolloProvider } from '@ap
 import { setContext } from '@apollo/client/link/context';
 import { ChakraProvider } from '@chakra-ui/react'
 
+const siteurl = 'https://localhost:2083'
 
 const httpLink = createHttpLink({
   //uri: 'https://dev.neko3.space/graphql/'
-  uri: 'https://localhost:2083/graphql/graphql/'
+  //uri: 'https://localhost:2083/graphql/graphql/'
+  uri: siteurl + '/graphql/'
 });
 
 const storageKey = "UserJwtToket"
