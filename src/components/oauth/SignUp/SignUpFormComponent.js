@@ -16,11 +16,14 @@ import {
 import { MdAlternateEmail, MdCheckCircleOutline, MdPersonOutline } from "react-icons/md";
 import { Checkbox, CheckboxGroup } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react';
+import { useToast } from '@chakra-ui/react'
 
 export default function SignUpFormComponent(){
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    const toast = useToast()
 
     const userRegistration = async (email, password, confirmPassword, username) => {
         await fetch(process.env.REACT_APP_URL + '/api/Account/Registration', {
@@ -37,9 +40,63 @@ export default function SignUpFormComponent(){
 
         })
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => {
+            if(data.errors.Email != null){
+                toast({
+                    title: 'Wrong data.',
+                    description: data.errors.Email,
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                })
+                return
+            }
+
+            if(data.errors.Username != null){
+                toast({
+                    title: 'Wrong data.',
+                    description: data.errors.Username,
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                })
+                return
+            }
+
+            if(data.errors.Password != null){
+                toast({
+                    title: 'Wrong data.',
+                    description: data.errors.Password,
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                })
+                return
+            }
+
+            // if( data.errors != null && data.errors.Email == null && data.errors.Username == null && data.errors.Password == null ){
+            //     toast({
+            //         title: 'Wrong data.',
+            //         description: data.errors,
+            //         status: 'error',
+            //         duration: 9000,
+            //         isClosable: true,
+            //     })
+            //     return
+            // }
+
+            // toast({
+            //     title: 'Success.',
+            //     description: data.errors,
+            //     status: 'success',
+            //     duration: 9000,
+            //     isClosable: true,
+            // })
+
+            console.log(data.errors)
+        })
         .catch((err) => {
-                console.log(err.message);
+            console.log(err.message);
         });
      };
 

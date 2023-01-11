@@ -20,6 +20,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { updateToken, destroyToken } from '../../../features/oauth/tokenSlice'
 import { isUserLogged, selectUser, updateUser } from '../../../features/oauth/userSlice'
+import { useToast } from '@chakra-ui/react'
 
 // Define mutation
 const LOGIN_MUTATION = gql`
@@ -39,6 +40,8 @@ export default function LoginFormComponent(){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    const toast = useToast()
+
     const userLogin = async (username, password) => {
         await fetch(process.env.REACT_APP_URL + '/api/Account/SignIn', {
             method: "POST", // default, so we can ignore
@@ -53,9 +56,22 @@ export default function LoginFormComponent(){
         .then(response => response.json())
         .then((data) => {
             console.log(data)
-            dispatch(updateToken(JSON.stringify(data.token) || null))
-            dispatch(updateUser())
-            navigate("/me")
+            if(data.status === 401) {
+                console.log('Wrong password!')
+                toast({
+                    title: 'Wrong email or password.',
+                    description: "Enter a valid email or password.",
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                  })
+            }
+            else{
+                dispatch(updateToken(JSON.stringify(data.token) || null))
+                dispatch(updateUser())
+                navigate("/me")
+            }
+   
         })
         .catch((err) => {
                 console.log(err.message);

@@ -2,7 +2,7 @@ import { useQuery, gql } from '@apollo/client';
 
 export const GET_ANIMES_LIST = gql`
     query {
-        anime(last: 50, after: "MjM5OTI=", where:{
+        anime(last: 50, where:{
 		anotherService: {
 			myAnimeList_not: null
 		}}) {
